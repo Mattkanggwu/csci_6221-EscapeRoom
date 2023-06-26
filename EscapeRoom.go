@@ -114,12 +114,13 @@ func getRoomExit(room string, direction string) string { // it is responsible fo
 		},
 		"north": {
 			"south": "start",
+			"west":  "game_over",
 		},
 		"south": {
 			"north": "start",
 		},
 		"east": {
-			"west": "game_over",
+			"west": "start",
 		},
 	}
 	return exits[room][direction]
