@@ -54,7 +54,7 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 		g.Player.Room = nextRoom
 		fmt.Println("Now, you are in the", nextRoom, "room.")
 
-		if nextRoom == "north" || nextRoom == "east" {
+		if nextRoom == "north" {
 			fmt.Println("Now there are two doors again: south (starting room) and west.")
 
 		} else if nextRoom == "east" {
