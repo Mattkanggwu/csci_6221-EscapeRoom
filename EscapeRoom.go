@@ -30,7 +30,8 @@ func (g *Game) Search() { /*  defines a method Search() on the Game struct.
 	}
 }
 
-func (g *Game) Move(direction string) {
+func (g *Game) Move(direction string) { // define the method move on the game struct
+	// It allows the player to move to a different room
 	nextRoom := getRoomExit(g.Player.Room, direction)
 	if nextRoom == "game_over" {
 		fmt.Println("Game Over! You entered the wrong room.")
@@ -49,7 +50,7 @@ func (g *Game) Move(direction string) {
 	}
 }
 
-func main() {
+func main() { // initial game state and run the game loop
 	game := Game{
 		Player: Player{
 			Room:  "start",
@@ -66,10 +67,11 @@ func main() {
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
 
-		switch input {
+		switch input { // handles different commands based on the user's input
 		case "search":
 			game.Search()
-		case "north", "south", "east", "west":
+		case "north", "south", "east", "west": // user enters a direction, move() method of the game is called to move the player to the corresponding room
+
 			game.Move(input)
 		case "quit":
 			fmt.Println("Goodbye!")
@@ -80,12 +82,13 @@ func main() {
 	}
 }
 
-func canSearchRoom(room string) bool {
-	searchableRooms := []string{"start", "north", "south"}
+func canSearchRoom(room string) bool { // this function determines if the given room is searchable or not.
+	searchableRooms := []string{"start", "north", "south"} // string representing the current room and returns a boolean value
 	return contains(searchableRooms, room)
 }
 
-func getRoomExit(room string, direction string) string {
+func getRoomExit(room string, direction string) string { // it is responsible for retrieving the next room based on the current room
+	// and the direction the player wants to move in
 	exits := map[string]map[string]string{
 		"start": {
 			"north": "north",
@@ -110,7 +113,8 @@ func getRoomExit(room string, direction string) string {
 	return ""
 }
 
-func contains(items []string, item string) bool {
+func contains(items []string, item string) bool { //contains helper function is used within the cansearchroom() and move() to check if
+	// an item exists in a slice.
 	for _, i := range items {
 		if i == item {
 			return true
