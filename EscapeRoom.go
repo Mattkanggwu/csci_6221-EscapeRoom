@@ -37,8 +37,6 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 		fmt.Println("Game Over! You entered the wrong room.")
 		return
 	} else if nextRoom != "" {
-		g.Player.Room = nextRoom
-		fmt.Println("Now, you are in the", nextRoom, "room.")
 		if nextRoom == "north" && !contains(g.Player.Items, "key") {
 			fmt.Println("The door is locked. you need a key to open it.")
 			return
