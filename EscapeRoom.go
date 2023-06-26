@@ -60,14 +60,14 @@ func main() { // initial game state and run the game loop
 
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("Welcome to the Escape Room Game! You can search each room to get the key because the door is locked. Now, you are in the starting room.")
+	fmt.Println("Welcome to the Escape Room Game! You can search each room to get the key because the door is locked. Now, you are in the starting room. Please, input the 'search' to get the key")
 
 	for {
 		fmt.Print("> ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
 
-		switch input { // handles different commands based on the user's input
+		switch strings.TrimSpace(input) { // handles different commands based on the user's input
 		case "search":
 			game.Search()
 		case "north", "south", "east", "west": // user enters a direction, move() method of the game is called to move the player to the corresponding room
