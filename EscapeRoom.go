@@ -13,8 +13,7 @@ type Player struct { //defines a struct Player that represents the player in the
 }
 
 type Game struct { //defines a struct Game that represents the game itself.
-	Player   Player
-	RoomLock map[string]bool
+	Player Player
 }
 
 func (g *Game) Search() { /*  defines a method Search() on the Game struct.
@@ -79,9 +78,6 @@ func main() { // initial game state and run the game loop
 			Room:  "start",
 			Items: []string{},
 		},
-		RoomLock: map[string]bool{
-			"west": true,
-		},
 	}
 
 	reader := bufio.NewReader(os.Stdin)
@@ -133,6 +129,7 @@ func getRoomExit(room string, direction string) string { // it is responsible fo
 			"west": "start",
 		},
 	}
+
 	return exits[room][direction]
 }
 
