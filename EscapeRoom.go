@@ -36,7 +36,10 @@ func (g *Game) Move(direction string) {
 		fmt.Println("The door is locked. You need a key to open it.")
 		return
 	} else if nextRoom != "" {
-		if (nextRoom == "north" || nextRoom == "west" || nextRoom == "east") && !contains(g.Player.Items, "key") {
+		if nextRoom == "north" && !contains(g.Player.Items, "key") {
+			fmt.Println("The door is locked. You need a key to open it.")
+			return
+		} else if (nextRoom == "west" || nextRoom == "east") && !contains(g.Player.Items, "key") {
 			fmt.Println("The door is locked. You need a key to open it.")
 			return
 		}
@@ -46,15 +49,19 @@ func (g *Game) Move(direction string) {
 			return
 		}
 
-		if (nextRoom == "west" || nextRoom == "east") && contains(g.Player.Items, "key") {
+		if nextRoom == "west" && contains(g.Player.Items, "key") {
 			fmt.Println("You used the key to unlock the door.")
 			g.Player.Items = removeItem(g.Player.Items, "key")
-			if nextRoom == "west" {
-				fmt.Println("Now, you can enter the west room.")
-			}
-		} else if (nextRoom == "west" || nextRoom == "east") && !contains(g.Player.Items, "key") {
+		} else if (nextRoom == "west") && !contains(g.Player.Items, "key") {
 			fmt.Println("The door is locked. You need a key to open it.")
 			return
+		}
+
+		if contains(g.Player.Items, "key") {
+			g.Player.Items = removeItem(g.Player.Items, "key")
+			if nextRoom != "east" {
+				fmt.Println("You used the key to unlock the door. Now you need to search the room again to get the key.")
+			}
 		}
 
 		g.Player.Room = nextRoom
