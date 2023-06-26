@@ -36,10 +36,7 @@ func (g *Game) Move(direction string) {
 		fmt.Println("The door is locked. You need a key to open it.")
 		return
 	} else if nextRoom != "" {
-		if nextRoom == "north" && !contains(g.Player.Items, "key") {
-			fmt.Println("The door is locked. You need a key to open it.")
-			return
-		} else if (nextRoom == "west" || nextRoom == "east") && !contains(g.Player.Items, "key") {
+		if (nextRoom == "north" || nextRoom == "west" || nextRoom == "east") && !contains(g.Player.Items, "key") {
 			fmt.Println("The door is locked. You need a key to open it.")
 			return
 		}
@@ -49,10 +46,10 @@ func (g *Game) Move(direction string) {
 			return
 		}
 
-		if nextRoom == "west" && contains(g.Player.Items, "key") {
+		if (nextRoom == "west" || nextRoom == "east") && contains(g.Player.Items, "key") {
 			fmt.Println("You used the key to unlock the door.")
 			g.Player.Items = removeItem(g.Player.Items, "key")
-		} else if (nextRoom == "west") && !contains(g.Player.Items, "key") {
+		} else if (nextRoom == "west" || nextRoom == "east") && !contains(g.Player.Items, "key") {
 			fmt.Println("The door is locked. You need a key to open it.")
 			return
 		}
