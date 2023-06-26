@@ -39,11 +39,18 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 	} else if nextRoom != "" {
 		g.Player.Room = nextRoom
 		fmt.Println("Now, you are in the", nextRoom, "room.")
+		if nextRoom == "north" && !contains(g.Player.Items, "key") {
+			fmt.Println("The door is locked. you need a key to open it.")
+			return
+
+		}
+		g.Player.Room = nextRoom
+		fmt.Println("Now, you are in the", nextRoom, "room.")
+
 		if nextRoom == "north" {
-			if !contains(g.Player.Items, "key") {
-				g.Search()
-				fmt.Println("Now there are two doors again: south (going back to starting room) and west.")
-			}
+			g.Search()
+			fmt.Println("Now there are two doors again: south (starting room) and west.")
+
 		} else if nextRoom == "south" || nextRoom == "west" {
 			if contains(g.Player.Items, "key") {
 				fmt.Println("You used the key to unlock the door, again serach the room.")
@@ -135,16 +142,15 @@ func contains(items []string, item string) bool { //contains helper function is 
 }
 
 func removeItem(items []string, item string) []string {
-	index := -1
+
 	for i, it := range items {
 		if it == item {
-			index = i
+			items = append(items[:i], items[i+1:]...)
+
 			break
 		}
 	}
-	if index >= 0 {
-		items = append(items[:index], items[index+1:]...)
-	}
+
 	return items
 
 }
