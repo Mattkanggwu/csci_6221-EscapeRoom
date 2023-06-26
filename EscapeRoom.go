@@ -39,14 +39,19 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 	} else if nextRoom != "" {
 		g.Player.Room = nextRoom
 		fmt.Println("Now, you are in the", nextRoom, "room.")
-		if nextRoom == "north" && !contains(g.Player.Items, "key") {
-			g.Search()
-			fmt.Println("Now there are two doors again: south (going back to starting room) and west.")
-		} else if (nextRoom == "south" || nextRoom == "west") && contains(g.Player.Items, "key") {
-			fmt.Println("You used the key to unlock the door, again serach the room.")
-			g.Player.Items = removeItem(g.Player.Items, "key")
-		}
-		if nextRoom == "east" && contains(g.Player.Items, "key") {
+		if nextRoom == "north" {
+			if !contains(g.Player.Items, "key") {
+				g.Search()
+				fmt.Println("Now there are two doors again: south (going back to starting room) and west.")
+			}
+		} else if nextRoom == "south" || nextRoom == "west" {
+			if contains(g.Player.Items, "key") {
+				fmt.Println("You used the key to unlock the door, again serach the room.")
+				g.Player.Items = removeItem(g.Player.Items, "key")
+			} else {
+				fmt.Println("The door is locked. You need a key to open it.")
+			}
+		} else if nextRoom == "east" && contains(g.Player.Items, "key") {
 			fmt.Println("Congratulations! You have escaped the room. Input 'quit' to end this game")
 			return
 		}
