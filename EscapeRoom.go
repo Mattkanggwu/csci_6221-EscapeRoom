@@ -13,7 +13,8 @@ type Player struct { //defines a struct Player that represents the player in the
 }
 
 type Game struct { //defines a struct Game that represents the game itself.
-	Player Player
+	Player   Player
+	RoomLock map[string]bool
 }
 
 func (g *Game) Search() { /*  defines a method Search() on the Game struct.
@@ -74,11 +75,16 @@ func main() { // initial game state and run the game loop
 			Room:  "start",
 			Items: []string{},
 		},
+		RoomLock: map[string]bool{
+			"west": true,
+		},
 	}
 
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("Welcome to the Escape Room Game! You can search each room to get the key because the door is locked. Now, you are in the starting room. Please, input the 'search' to get the key and there are two doors for north and east, select one")
+	fmt.Println("Welcome to the Escape Room Game!")
+	fmt.Println("You can search each room to get the key because the door is locked.")
+	fmt.Println("Now, you are in the starting room. Please, input the 'search' to find the key and there are two doors for north and east, select one")
 
 	for {
 		fmt.Print("> ")
