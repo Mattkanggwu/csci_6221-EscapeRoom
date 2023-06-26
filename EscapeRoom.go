@@ -41,6 +41,11 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 		fmt.Println("Now, you are in the", nextRoom, "room.")
 		if nextRoom == "north" && !contains(g.Player.Items, "key") {
 			g.Search()
+			fmt.Println("Now there are two doors again: south (going back to starting room) and west.")
+		}
+		if (nextRoom == "south" || nextRoom == "west") && contains(g.Player.Items, key) {
+			fmt.Println("You used the key to unlock the door, again serach the room.")
+			g.Player.Items = removeItem(g.Player.Items, "key")
 		}
 		if nextRoom == "east" && contains(g.Player.Items, "key") {
 			fmt.Println("Congratulations! You have escaped the room.")
@@ -122,4 +127,19 @@ func contains(items []string, item string) bool { //contains helper function is 
 		}
 	}
 	return false
+}
+
+func removeItem(items []string, item string) []string {
+	index := -1
+	for i, it := range items {
+		if it == item {
+			index = i
+			break
+		}
+	}
+	if index >= 0 {
+		items = append(items[:index], items[index+1:]...)
+	}
+	return items
+
 }
