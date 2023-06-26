@@ -52,14 +52,7 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 		if nextRoom == "north" {
 			fmt.Println("Now there are two doors again: south (starting room) and west.")
 
-		} else if nextRoom == "south" || nextRoom == "west" {
-			if contains(g.Player.Items, "key") {
-				fmt.Println("You used the key to unlock the door, again serach the room.")
-				g.Player.Items = removeItem(g.Player.Items, "key")
-			} else {
-				fmt.Println("The door is locked. You need a key to open it.")
-			}
-		} else if nextRoom == "east" && contains(g.Player.Items, "key") {
+		} else if nextRoom == "east" {
 			fmt.Println("Congratulations! You have escaped the room. Input 'quit' to end this game")
 			return
 		}
