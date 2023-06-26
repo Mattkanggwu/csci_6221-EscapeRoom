@@ -30,37 +30,33 @@ func (g *Game) Search() { /*  defines a method Search() on the Game struct.
 	}
 }
 
-func (g *Game) Move(direction string) {
+func (g *Game) Move(direction string) { // define the method move on the game struct
+	// It allows the player to move to a different room
 	nextRoom := getRoomExit(g.Player.Room, direction)
 	if nextRoom == "game_over" {
-		fmt.Println("The door is locked. You need a key to open it.")
+		fmt.Println("Game Over! You entered the wrong room.")
 		return
 	} else if nextRoom != "" {
-		if nextRoom == "north" && !contains(g.Player.Items, "key") {
-			fmt.Println("The door is locked. You need a key to open it.")
+		if (nextRoom == "north" || nextRoom == "east" || nextRoom == "west") && !contains(g.Player.Items, "key") {
+			fmt.Println("The door is locked. you need a key to open it.")
 			return
-		} else if (nextRoom == "west" || nextRoom == "east") && !contains(g.Player.Items, "key") {
-			fmt.Println("The door is locked. You need a key to open it.")
-			return
-		}
 
+		}
 		if nextRoom == "north" && !contains(g.Player.Items, "key") {
 			g.Search()
 			return
 		}
-
 		if nextRoom == "west" && contains(g.Player.Items, "key") {
 			fmt.Println("You used the key to unlock the door.")
 			g.Player.Items = removeItem(g.Player.Items, "key")
-		} else if (nextRoom == "west") && !contains(g.Player.Items, "key") {
+		} else if nextRoom == "west" && !contains(g.Player.Items, "key") {
 			fmt.Println("The door is locked. You need a key to open it.")
 			return
 		}
-
 		if contains(g.Player.Items, "key") {
 			g.Player.Items = removeItem(g.Player.Items, "key")
 			if nextRoom != "east" {
-				fmt.Println("You used the key to unlock the door. Now you need to search the room again to get the key.")
+				fmt.Println("You used the key to unlock the door. Now you need to reserach the room again to get the key")
 			}
 		}
 
@@ -69,8 +65,9 @@ func (g *Game) Move(direction string) {
 
 		if nextRoom == "north" {
 			fmt.Println("Now, there are two doors again: south (starting room) and west.")
+
 		} else if nextRoom == "east" {
-			fmt.Println("Congratulations! You have escaped the room. Input 'quit' to end this game.")
+			fmt.Println("Congratulations! You have escaped the room. Input 'quit' to end this game")
 			return
 		}
 	} else {
