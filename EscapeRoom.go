@@ -1,4 +1,4 @@
-package main //Main package
+package main //Main package.
 
 import (
 	"bufio"   // bufio provides buffered I/O operations
