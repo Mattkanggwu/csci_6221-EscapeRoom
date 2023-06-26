@@ -42,6 +42,10 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 			return
 
 		}
+		if nextRoom == "north" && !contains(g.Player.Items, "key") {
+			g.Search()
+			return
+		}
 		if contains(g.Player.Items, "key") {
 			g.Player.Items = removeItem(g.Player.Items, "key")
 			if nextRoom != "east" {
