@@ -55,6 +55,10 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 				return
 			}
 		}
+		if (nextRoom == "north" || nextRoom == "west") && !contains(g.Player.Items, "key") {
+			fmt.Println("The door is locked, you need a key")
+			return
+		}
 		if contains(g.Player.Items, "key") {
 			g.Player.Items = removeItem(g.Player.Items, "key")
 			if nextRoom != "east" {
