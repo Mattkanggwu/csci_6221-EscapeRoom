@@ -37,7 +37,7 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 		fmt.Println("Game Over! You entered the wrong room.")
 		return
 	} else if nextRoom != "" {
-		if (nextRoom == "north" || nextRoom == "east") && !contains(g.Player.Items, "key") {
+		if (nextRoom == "north" || nextRoom == "east" || nextRoom == "west") && !contains(g.Player.Items, "key") {
 			fmt.Println("The door is locked. you need a key to open it.")
 			return
 
@@ -57,7 +57,7 @@ func (g *Game) Move(direction string) { // define the method move on the game st
 		fmt.Println("Now, you are in the", nextRoom, "room.")
 
 		if nextRoom == "north" {
-			fmt.Println("Now there are two doors again: south (starting room) and west.")
+			fmt.Println("Now, there are two doors again: south (starting room) and west.")
 
 		} else if nextRoom == "east" {
 			fmt.Println("Congratulations! You have escaped the room. Input 'quit' to end this game")
@@ -111,10 +111,10 @@ func getRoomExit(room string, direction string) string { // it is responsible fo
 		"start": {
 			"north": "north",
 			"east":  "east",
+			"west":  "west",
 		},
 		"north": {
 			"south": "start",
-			"west":  "game_over",
 		},
 		"south": {
 			"north": "start",
@@ -122,19 +122,16 @@ func getRoomExit(room string, direction string) string { // it is responsible fo
 		"east": {
 			"west": "start",
 		},
+		"west": {
+			"east": "start",
+		},
 	}
-
-	if roomExits, ok := exits[room]; ok {
-		if nextRoom, ok := roomExits[direction]; ok {
-			return nextRoom
-		}
-	}
-	return ""
+	return exits[room][direction]
 }
 
-func contains(items []string, item string) bool { //contains helper function is used within the cansearchroom() and move() to check if
+func contains(slice []string, item string) bool { //contains helper function is used within the cansearchroom() and move() to check if
 	// an item exists in a slice.
-	for _, i := range items {
+	for _, i := range slice {
 		if i == item {
 			return true
 		}
@@ -142,16 +139,18 @@ func contains(items []string, item string) bool { //contains helper function is 
 	return false
 }
 
-func removeItem(items []string, item string) []string {
-
-	for i, it := range items {
-		if it == item {
-			items = append(items[:i], items[i+1:]...)
+func removeItem(slice []string, item string) []string {
+	index := -1
+	for i, s := range slice {
+		if s == item {
+			index = i
 
 			break
 		}
 	}
-
-	return items
+	if index != -1 {
+		slice = append(slice[:index], slice[index+1:]...)
+	}
+	return slice
 
 }
